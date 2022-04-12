@@ -50,10 +50,10 @@ export const initBuffers = gl => {
     [1.0, 0.0, 1.0, 1.0] // Purple
   ]
 
-  let colors = [];
+  let colors = []; // 共 96 个数据，即 24 个颜色向量。和顶点的个数相同，即颜色向量与顶点向量一一按顺序对应
   for(let i = 0; i < faceColors.length; i++) {
     const c = faceColors[i];
-    colors = colors.concat(c, c, c, c); // 打平数据? 
+    colors = colors.concat(c, c, c, c);  // 意味着每 4 个顶点是同一种颜色
   }
   const colorBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);

@@ -14,7 +14,21 @@ export const draw = (gl, programInfo, buffers) => {
   perspective(projectionMat, fov, aspect, 0.1, 100.0)
 
   const modelViewMat = create();
-  translate(modelViewMat, modelViewMat, [-0.0, 0.0, -20.0]) // 平移，为什么只有三个维度？？ mat 命名没有体现维度
+    /**
+    * 此时的 modelViewMat：
+    * 1, 0, 0, 0,
+    * 0, 1, 0, 0,
+    * 0, 0, 1, 0,
+    * 0, 0, 0, 1,
+    */
+  translate(modelViewMat, modelViewMat, [-0.0, 0.0, -20.0])
+      /**
+    * 此时的 modelViewMat：
+    * 1, 0, 0, 0,
+    * 0, 1, 0, 0,
+    * 0, 0, 1, 0,
+    * 0, 0, -20, 1,
+    */
 
   const delta = Math.PI / 4
   rotate(modelViewMat, modelViewMat, delta, [1, 1, 0])
