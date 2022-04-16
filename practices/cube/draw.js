@@ -13,7 +13,7 @@ export const draw = (gl, programInfo, buffers) => {
   const projectionMat = create();
   perspective(projectionMat, fov, aspect, 0.1, 100.0)
 
-  const modelViewMat = create();
+  const modelViewMat = create(); // 为什么没有 view 的 lookat ？
     /**
     * 此时的 modelViewMat：
     * 1, 0, 0, 0,
