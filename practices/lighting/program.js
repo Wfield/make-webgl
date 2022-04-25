@@ -50,10 +50,10 @@ export const initProgram = (gl) => {
     attribLocations: {
       pos: gl.getAttribLocation(program, 'pos'),
       color: gl.getAttribLocation(program, 'color'),
-      vertexNormal: gl.getAttribLocation(program, 'vertexNormal'),
+      vertexNormal: gl.getAttribLocation(program, 'vertexNormal'), // 法向量
     },
     uniformLocations: {
-      normalMat: gl.getUniformLocation(program, 'normalMat'),
+      normalMat: gl.getUniformLocation(program, 'normalMat'), // 对法向量进行变换的矩阵
       projectionMat: gl.getUniformLocation(program, 'projectionMat'),
       modelViewMat: gl.getUniformLocation(program, 'modelViewMat'),
     }

@@ -15,6 +15,8 @@ void main() {
 }
 `
 
+// sampler 采样器，如何对图片进行采样？
+// vTexCoord 纹理坐标，获取图片对应坐标的颜色
 const fragmentShader = `
 uniform sampler2D sampler;
 varying highp vec2 vTexCoord;

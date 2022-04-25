@@ -23,8 +23,8 @@ export const draw = (gl, programInfo, buffers) => {
   rotate(modelViewMat, modelViewMat, delta, [1, 1, 0]);
 
   const normalMat = create();
-  invert(normalMat, modelViewMat);
-  transpose(normalMat, normalMat);
+  invert(normalMat, modelViewMat); // 逆矩阵
+  transpose(normalMat, normalMat); // 转置矩阵
 
   const { pos } = programInfo.attribLocations;
   gl.bindBuffer(gl.ARRAY_BUFFER, buffers.positionBuffer);
