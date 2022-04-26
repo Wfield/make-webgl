@@ -1,5 +1,5 @@
 import { create, perspective, rotate, translate } from "../../lib/math.js"
-import { getXRotateDegree, getYRotateDegree, getZRotateDegree } from './tool.js'
+import { getXRotateDegree, getYRotateDegree, getZRotateDegree, getNear } from './tool.js'
 
 export const draw = (gl, programInfo, buffers, texture) => {
   gl.clearColor(0.0, 0.0, 0.0, 1.0)
@@ -13,7 +13,8 @@ export const draw = (gl, programInfo, buffers, texture) => {
   perspective(projectionMat, fov, aspect, 0.1, 100.0);
 
   const modelViewMat = create();
-  translate(modelViewMat, modelViewMat, [0.0, 0.0, -4.0]);
+  const near = getNear();
+  translate(modelViewMat, modelViewMat, [0.0, 0.0, 0 - near]);
   const xDeg = getXRotateDegree();
   rotate(modelViewMat, modelViewMat, xDeg, [1.0, 0.0, 0.0])
   const yDeg = getYRotateDegree();

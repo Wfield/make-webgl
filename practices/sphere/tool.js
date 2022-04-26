@@ -40,3 +40,11 @@ export const getLongitudePointNum = () => {
   longiPointsNumValue.innerHTML = longiPointsNum.value;
   return longiPointsNum.value;
 }
+
+
+const near = document.querySelector('#near-silder').querySelector('input');
+const nearValue = document.querySelector('#near-silder').querySelector('.value');
+export const getNear = () => {
+  nearValue.innerHTML = near.value;
+  return near.value;
+}
