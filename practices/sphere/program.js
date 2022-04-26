@@ -2,24 +2,25 @@ import { initShader } from '../../lib/shader.js';
 
 const vertexShader = `
 attribute vec4 pos;
-attribute vec4 color;
+attribute vec2 texCoord;
 
 uniform mat4 modelViewMat;
 uniform mat4 projectionMat;
 
-varying vec4 vColor;
+varying highp vec2 vTexCoord;
 
 void main() {
   gl_Position = projectionMat * modelViewMat * pos;
-  vColor = color;
+  vTexCoord = texCoord;
 }
 `
 
-const fragmentShader  =`
-varying highp vec4 vColor;
+const fragmentShader = `
+uniform sampler2D sampler;
+varying highp vec2 vTexCoord;
 
 void main() {
-  gl_FragColor = vColor;
+  gl_FragColor = texture2D(sampler, vTexCoord);
 }
 `
 
@@ -29,9 +30,10 @@ export const initProgram = (gl) => {
     program,
     attribLocations: {
       pos: gl.getAttribLocation(program, 'pos'),
-      color: gl.getAttribLocation(program, 'color'),
+      texCoord: gl.getAttribLocation(program, 'texCoord'),
     },
     uniformLocations: {
+      sampler: gl.getUniformLocation(program, 'sampler'),
       modelViewMat: gl.getUniformLocation(program, 'modelViewMat'),
       projectionMat: gl.getUniformLocation(program, 'projectionMat'),
     }

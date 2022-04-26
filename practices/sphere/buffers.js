@@ -37,6 +37,8 @@ export const initBuffers = (gl) => {
     angle2 += per_angle_lat;
   }
 
+  // console.log('positions: ', positions);
+
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
@@ -60,19 +62,31 @@ export const initBuffers = (gl) => {
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
 
-  const colors = [];
-  for(let i = 0; i < indices.length; i++) {
-    const c = (i /indices.length) + 0.5;
-    colors.push(c, c, c, 1.0);
+  const texCoord = [];
+  let u_val = 0;
+  const per_u_piece = 360 / lat_num;
+  let v_val = 0;
+  const per_v_piece = 180 / lon_num;
+  for (let w = 0; w < lat_num; w++) {
+    for (let h = 0; h < lon_num; h++) {
+      const width = u_val / 360;
+      const height = v_val / 180;
+      texCoord.push(width, height);
+      v_val += per_v_piece;
+    }
+    v_val = 0;
+    u_val += per_u_piece;
   }
-  const colorBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+  const texCoordBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoord), gl.STATIC_DRAW);
+
 
   return {
     positions: positionBuffer,
     indices: indexBuffer,
     elementNum: indices.length,
-    colors: colorBuffer,
+    // colors: colorBuffer,
+    texCoord: texCoordBuffer,
   }
 }
