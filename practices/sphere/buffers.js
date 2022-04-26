@@ -17,7 +17,7 @@ export const initBuffers = (gl) => {
     angle += per_angle_log;
   }
 
-  const positions = []; // 第一个点是(0, 0, -1) 按逆时针方向的点,依次 push
+  const positions = []; // 第一个点是(0, -1, 0) 按逆时针方向的点,依次 push
 
   let angle2 = 0;
   for (let i = 0; i < lat_num; i++) {
@@ -54,7 +54,7 @@ export const initBuffers = (gl) => {
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
 
-  const texCoord = [];
+  const texCoord = []; // u v 坐标, 顺序与 position 中的点(空间中的点)一一对应. 坐标原点是图片左下角
   let u_val = 0;
   const per_u_piece = 360 / lat_num;
   let v_val = 0;
