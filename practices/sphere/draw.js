@@ -26,6 +26,11 @@ export const draw = (gl, programInfo, buffers) => {
   gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(pos);
 
+  const { color } = programInfo.attribLocations;
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.colors);
+  gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(color);
+
   gl.useProgram(programInfo.program);
 
   const { uniformLocations } = programInfo;
@@ -33,6 +38,5 @@ export const draw = (gl, programInfo, buffers) => {
   gl.uniformMatrix4fv(uniformLocations.modelViewMat, false, modelViewMat);
 
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
-  gl.drawElements(gl.LINES, buffers.elementNum, gl.UNSIGNED_SHORT, 0)
-  // gl.drawArrays(gl.LINE_STRIP, 0, buffers.elementNum)
+  gl.drawElements(gl.TRIANGLE_STRIP, buffers.elementNum, gl.UNSIGNED_SHORT, 0)
 }
