@@ -1,16 +1,11 @@
-import { create, rotate } from "../../lib/math.js";
-import { getLongitudeNum, getLongitudePointNum } from './tool.js'
-
 // longitude 经度
 // latitude 纬度
-// 半圆弧旋转 360 度
+// 思路: 先画一个半圆弧, 然后将半圆弧旋转 360 度
 const radius = 1.0;
-// const lon_num = getLongitudeNum(); // 将经度线分为多少份
-// const lat_num = getLongitudePointNum(); // 将圆周分为多少份
-const lon_num = 36;
-const lat_num = 180;
+const lon_num = 36; // 将经度线分为多少份
+const lat_num = 180; // 将圆周分为多少份
 const per_angle_log = Math.PI / (lon_num - 1); // 两端的点都需要绘制,所以角度是 lon_num - 1 个;
-const per_angle_lat = 2 * Math.PI / (lat_num - 1); // 纬度每份角度 (这里 - 1,是因为在贴纹理时,发现贴图头尾有一条缝隙. 这里多画了一条经线,最后一条经线与第一条经线重合)
+const per_angle_lat = 2 * Math.PI / (lat_num - 1); // 纬度上每份圆弧的角度 (这里 - 1,是因为在贴纹理时,发现贴图头尾有一条缝隙. 这里多画了一条经线,最后一条经线与第一条经线重合)
 
 export const initBuffers = (gl) => {
   const points = []; // 经度线上半圆上的点
@@ -24,20 +19,17 @@ export const initBuffers = (gl) => {
 
   const positions = []; // 第一个点是(0, 0, -1) 按逆时针方向的点,依次 push
 
-  const rotateMat = create();
   let angle2 = 0;
   for (let i = 0; i < lat_num; i++) {
-    rotate(rotateMat, rotateMat, angle2, [0, 1, 0]) // 从 0 度开始, 绕 y 轴逆时针旋转 360 度, 即 lat_num 次
+    // 从 0 度开始, 绕 y 轴逆时针旋转 360 度, 即 lat_num 次
     points.forEach(pos => {
-      const [prev_x, prev_y, prev_z] = pos;
+      const [prev_x, prev_y] = pos;
       const x = prev_x * Math.cos(angle2)
       const z = -prev_x * Math.sin(angle2);
       positions.push(x, prev_y, z)
     });
     angle2 += per_angle_lat;
   }
-
-  // console.log('positions: ', positions);
 
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -85,7 +77,6 @@ export const initBuffers = (gl) => {
     positions: positionBuffer,
     indices: indexBuffer,
     elementNum: indices.length,
-    // colors: colorBuffer,
     texCoord: texCoordBuffer,
   }
 }

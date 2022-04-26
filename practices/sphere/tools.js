@@ -26,20 +26,20 @@ export const getZRotateDegree = () => {
 }
 
 
-const longiNum = document.querySelector('#longitude-num').querySelector('input');
-const longiNumValue = document.querySelector('#longitude-num').querySelector('.value');
-export const getLongitudeNum = () => {
-  longiNumValue.innerHTML = longiNum.value;
-  return longiNum.value;;
-}
+// const longiNum = document.querySelector('#longitude-num').querySelector('input');
+// const longiNumValue = document.querySelector('#longitude-num').querySelector('.value');
+// export const getLongitudeNum = () => {
+//   longiNumValue.innerHTML = longiNum.value;
+//   return longiNum.value;;
+// }
 
 
-const longiPointsNum = document.querySelector('#longitude-point').querySelector('input');
-const longiPointsNumValue = document.querySelector('#longitude-point').querySelector('.value');
-export const getLongitudePointNum = () => {
-  longiPointsNumValue.innerHTML = longiPointsNum.value;
-  return longiPointsNum.value;
-}
+// const longiPointsNum = document.querySelector('#longitude-point').querySelector('input');
+// const longiPointsNumValue = document.querySelector('#longitude-point').querySelector('.value');
+// export const getLongitudePointNum = () => {
+//   longiPointsNumValue.innerHTML = longiPointsNum.value;
+//   return longiPointsNum.value;
+// }
 
 
 const near = document.querySelector('#near-silder').querySelector('input');

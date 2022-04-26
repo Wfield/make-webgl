@@ -1,5 +1,5 @@
 import { create, perspective, rotate, translate } from "../../lib/math.js"
-import { getXRotateDegree, getYRotateDegree, getZRotateDegree, getNear } from './tool.js'
+import { getXRotateDegree, getYRotateDegree, getZRotateDegree, getNear } from './tools.js'
 
 export const draw = (gl, programInfo, buffers, texture) => {
   gl.clearColor(0.0, 0.0, 0.0, 1.0)
