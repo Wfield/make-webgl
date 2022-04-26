@@ -8,9 +8,9 @@ const radius = 1.0;
 // const lon_num = getLongitudeNum(); // 将经度线分为多少份
 // const lat_num = getLongitudePointNum(); // 将圆周分为多少份
 const lon_num = 36;
-const lat_num = 36;
+const lat_num = 180;
 const per_angle_log = Math.PI / (lon_num - 1); // 两端的点都需要绘制,所以角度是 lon_num - 1 个;
-const per_angle_lat = 2 * Math.PI / lat_num; // 纬度每份角度
+const per_angle_lat = 2 * Math.PI / (lat_num - 1); // 纬度每份角度 (这里 - 1,是因为在贴纹理时,发现贴图头尾有一条缝隙. 这里多画了一条经线,最后一条经线与第一条经线重合)
 
 export const initBuffers = (gl) => {
   const points = []; // 经度线上半圆上的点
@@ -80,7 +80,6 @@ export const initBuffers = (gl) => {
   const texCoordBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoord), gl.STATIC_DRAW);
-
 
   return {
     positions: positionBuffer,
