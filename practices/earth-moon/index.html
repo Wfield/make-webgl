@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>earth moon</title>
+    <style>
+    #gl-canvas { display: block; }
+    .tools {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 300px;
+    }
+    </style>
+  </head>
+  <body>
+    <canvas id="gl-canvas" width="400" height="400"></canvas>
+    <script src="./main.js" type="module"></script>
+    <div class="tools">
+      <div id="camera-rotate" class="silder">
+        <div class="label">camera rotate: </div>
+        <input type="range" min="0" max="360" value="0" />
+        <div class="value"></div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -41,7 +41,7 @@ export const draw = (gl, programInfo, buffers, texture) => {
   gl.uniformMatrix4fv(uniformLocations.projectionMat, false, projectionMat);
   gl.uniformMatrix4fv(uniformLocations.modelViewMat, false, modelViewMat);
 
-  // 1维有符号整数
+  // 1维有符号整数; 纹理赋值
   gl.uniform1i(uniformLocations.sampler, 0);
 
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
