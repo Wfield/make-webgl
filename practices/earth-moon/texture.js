@@ -21,7 +21,6 @@ export const initTexture = (gl, images = []) => {
     // 上传图像到纹理
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, images[ii]);
 
-    console.log('texture: ', texture)
     // 将纹理添加到纹理序列
     textures.push(texture);
   }
@@ -38,7 +37,6 @@ function loadImage(url, callback) {
 }
 
 export function loadImages(urls, callback) {
-  console.log('urls: ', urls)
   var images = [];
   var imagesToLoad = urls.length;
 
@@ -47,7 +45,6 @@ export function loadImages(urls, callback) {
     --imagesToLoad;
     // 如果所有图像都加载完成就调用回调函数
     if (imagesToLoad == 0) {
-      console.log('images: ', images);
       callback(images);
     }
   };
