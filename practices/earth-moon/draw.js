@@ -28,10 +28,6 @@ export const draw = (gl, programInfo, buffers, textures) => {
   const earthModelMat = create();
   scale(earthModelMat, moonModelMat, 2.0, 2.0, 2.0) // 地球是月球大小的两倍
 
-  // // 将月球位移, 避免和地球重合
-  // translate(moonModelMat, moonModelMat, [5.0, 0.0, 0.0]);
-
-
   const { pos } = programInfo.attribLocations;
   gl.bindBuffer(gl.ARRAY_BUFFER, buffers.positions);
   gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 0, 0);
