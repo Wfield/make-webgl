@@ -65,19 +65,19 @@ export const draw = (gl, programInfo, { roomBuffer, coneBuffer, cameraBuffer, cy
   // gl.drawElements(gl.TRIANGLE_STRIP, roomBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
 
   // 渲染椎体
-  // let coneModelMat = create();
-  // translate(coneModelMat, coneModelMat, [-0.0, scaleVal + 1, -scaleVal]);
-  // coneModelMat = m4.xRotate(coneModelMat, degToRad(180));
-  // coneModelMat = m4.yRotate(coneModelMat, degToRad(45));
+  let coneModelMat = create();
+  translate(coneModelMat, coneModelMat, [-0.0, 0.5, -0.5]);
+  coneModelMat = m4.xRotate(coneModelMat, degToRad(180));
+  coneModelMat = m4.yRotate(coneModelMat, degToRad(45));
 
-  // gl.bindBuffer(gl.ARRAY_BUFFER, coneBuffer.position);
-  // gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 0, 0);
-  // gl.enableVertexAttribArray(pos);
+  gl.bindBuffer(gl.ARRAY_BUFFER, coneBuffer.position);
+  gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(pos);
 
-  // gl.uniformMatrix4fv(uniformLocations.modelMat, false, coneModelMat);
+  gl.uniformMatrix4fv(uniformLocations.modelMat, false, coneModelMat);
 
-  // gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, coneBuffer.indices);
-  // gl.drawElements(gl.LINES, coneBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, coneBuffer.indices);
+  gl.drawElements(gl.LINES, coneBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
 
   // 渲染圆柱体
   let cylinderModelMat = create();

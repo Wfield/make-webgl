@@ -30,7 +30,6 @@ export const initBuffer = (gl) => {
     cnt2--;
   }
 
-  console.log('positions: ', positions);
 
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -46,7 +45,6 @@ export const initBuffer = (gl) => {
     const third = 0;
     indices.push(first, second, third);
   }
-  console.log('indices 1 ', indices);
 
   // 构成上方圆的三角形
   for (let i = half_len + 1; i < point_num; i++) {
@@ -55,7 +53,6 @@ export const initBuffer = (gl) => {
     const third = half_len;
     indices.push(first, second, third);
   }
-  console.log('indices 2: ', indices);
 
 
   // 圆柱体侧面
