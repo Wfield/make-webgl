@@ -1,8 +1,8 @@
 import { createTool } from '../../lib/utils.js';
 import { initProgram } from './program.js';
 import { initBuffers as initCameraBuffer } from './buffer.js';
-import { draw } from './draw.js';
 import { initBuffers as initRoomBuffer } from '../disco-room/buffer.js';
+import { draw } from './draw.js';
 
 
 
