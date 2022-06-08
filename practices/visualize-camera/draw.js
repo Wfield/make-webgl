@@ -21,6 +21,7 @@ export const draw = (gl, programInfo, { roomBuffer, coneBuffer, cameraBuffer, cy
   // caremaMat = m4.lookAt(caremaMat, [0.5, 0.5, 0.5], [0, 1, 0]);
   caremaMat = m4.yRotate(caremaMat, degToRad(values['cam-rotate-y']));
   caremaMat = m4.xRotate(caremaMat, degToRad(values['cam-rotate-x']));
+  caremaMat = m4.zRotate(caremaMat, degToRad(values['cam-rotate-z']));
   translate(caremaMat, caremaMat, [values['cam-trans-x'], values['cam-trans-y'], values['cam-trans-z']]);
   const viewMat = create();
   invert(viewMat, caremaMat);
@@ -66,7 +67,7 @@ export const draw = (gl, programInfo, { roomBuffer, coneBuffer, cameraBuffer, cy
 
   // 渲染椎体
   let coneModelMat = create();
-  translate(coneModelMat, coneModelMat, [-0.0, 0.5, -0.5]);
+  translate(coneModelMat, coneModelMat, [-0.0, scaleVal / 2 + 1, 0]);
   coneModelMat = m4.xRotate(coneModelMat, degToRad(180));
   coneModelMat = m4.yRotate(coneModelMat, degToRad(45));
 
@@ -80,34 +81,34 @@ export const draw = (gl, programInfo, { roomBuffer, coneBuffer, cameraBuffer, cy
   gl.drawElements(gl.LINES, coneBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
 
   // 渲染圆柱体
-  let cylinderModelMat = create();
-  gl.bindBuffer(gl.ARRAY_BUFFER, cylinderBuffer.position);
-  gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(pos);
+  // let cylinderModelMat = create();
+  // gl.bindBuffer(gl.ARRAY_BUFFER, cylinderBuffer.position);
+  // gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 0, 0);
+  // gl.enableVertexAttribArray(pos);
 
-  gl.bindBuffer(gl.ARRAY_BUFFER, cylinderBuffer.y_color);
-  gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(color);
+  // gl.bindBuffer(gl.ARRAY_BUFFER, cylinderBuffer.y_color);
+  // gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
+  // gl.enableVertexAttribArray(color);
 
-  gl.uniformMatrix4fv(uniformLocations.modelMat, false, cylinderModelMat);
+  // gl.uniformMatrix4fv(uniformLocations.modelMat, false, cylinderModelMat);
 
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderBuffer.indices);
-  gl.drawElements(gl.TRIANGLES, cylinderBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
+  // gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderBuffer.indices);
+  // gl.drawElements(gl.TRIANGLES, cylinderBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
 
-  cylinderModelMat = m4.zRotate(cylinderModelMat, degToRad(-90));
-  gl.bindBuffer(gl.ARRAY_BUFFER, cylinderBuffer.x_color);
-  gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(color);
-  gl.uniformMatrix4fv(uniformLocations.modelMat, false, cylinderModelMat);
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderBuffer.indices);
-  gl.drawElements(gl.TRIANGLES, cylinderBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
+  // cylinderModelMat = m4.zRotate(cylinderModelMat, degToRad(-90));
+  // gl.bindBuffer(gl.ARRAY_BUFFER, cylinderBuffer.x_color);
+  // gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
+  // gl.enableVertexAttribArray(color);
+  // gl.uniformMatrix4fv(uniformLocations.modelMat, false, cylinderModelMat);
+  // gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderBuffer.indices);
+  // gl.drawElements(gl.TRIANGLES, cylinderBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
 
-  cylinderModelMat = m4.xRotate(cylinderModelMat, degToRad(-90));
-  gl.bindBuffer(gl.ARRAY_BUFFER, cylinderBuffer.z_color);
-  gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(color);
-  gl.uniformMatrix4fv(uniformLocations.modelMat, false, cylinderModelMat);
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderBuffer.indices);
-  gl.drawElements(gl.TRIANGLES, cylinderBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
+  // cylinderModelMat = m4.xRotate(cylinderModelMat, degToRad(90));
+  // gl.bindBuffer(gl.ARRAY_BUFFER, cylinderBuffer.z_color);
+  // gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
+  // gl.enableVertexAttribArray(color);
+  // gl.uniformMatrix4fv(uniformLocations.modelMat, false, cylinderModelMat);
+  // gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderBuffer.indices);
+  // gl.drawElements(gl.TRIANGLES, cylinderBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
 
 } 

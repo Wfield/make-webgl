@@ -2,7 +2,7 @@ import { createTool } from '../../lib/utils.js';
 import { initProgram } from './program.js';
 import { initBuffers as initCameraBuffer } from './buffer.js';
 import { initBuffers as initRoomBuffer } from '../disco-room/buffer.js';
-import { initBuffers as initConeBuffer } from '../cone/buffer.js';
+import { initBuffers as initConeBuffer } from '../pyramid/buffer.js';
 import { initBuffer as initCylinderBuffer } from '../cylinder/buffer.js';
 import { draw } from './draw.js';
 
@@ -28,4 +28,6 @@ createTool({ type: 'range', name: 'cam-trans-y', min: 0, max: 100, step: 0.5, on
 createTool({ type: 'range', name: 'cam-trans-z', min: 0, max: 100, onChange: drawFram }, values)
 createTool({ type: 'range', name: 'cam-rotate-y', min: 0, max: 360, onChange: drawFram }, values)
 createTool({ type: 'range', name: 'cam-rotate-x', min: 0, max: 360, onChange: drawFram }, values)
+createTool({ type: 'range', name: 'cam-rotate-z', min: 0, max: 360, onChange: drawFram }, values)
+
 

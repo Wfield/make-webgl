@@ -2,7 +2,7 @@
 
 export const initBuffer = (gl) => {
   const radius = .01;
-  const cnt = 360 / 20; // 采样次数, 每 10deg 采样一次; 
+  const cnt = 360 / 10; // 采样次数, 每 10deg 采样一次; 
   const per_ang = 2 * Math.PI / cnt; // 没错采样角度;
   let ang = 0;
 
@@ -16,7 +16,6 @@ export const initBuffer = (gl) => {
     ang += per_ang;
     cnt1--;
   }
-  console.log('positions 1: ', positions);
 
   // 上方圆采样
   ang = 0;

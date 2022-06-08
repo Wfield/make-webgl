@@ -1,0 +1,22 @@
+import { initProgram } from "./program.js";
+import { draw } from './draw.js';
+import { initBuffers as initConeBuffer } from '../cone/buffer.js'
+import { initBuffer as initCylinderBuffer } from '../cylinder/buffer.js'
+import { createTool } from "../../lib/utils.js";
+
+const gl = document.querySelector('#gl-canvas').getContext('webgl');
+
+const programInfo = initProgram(gl);
+const coneBuffer = initConeBuffer(gl);
+const cylinderBuffer = initCylinderBuffer(gl);
+
+const values = {};
+
+
+const drawFram = () => {
+  draw(gl, programInfo, { coneBuffer, cylinderBuffer }, values);
+}
+
+drawFram();
+
+createTool({ type: 'range', name: 'cam-rotate-y', min: 0, max: 360, onChange: drawFram }, values)
