@@ -1,4 +1,4 @@
-import { create, invert, perspective, m4 } from '../../lib/math.js';
+import { create, m4 } from '../../lib/math.js';
 import { degToRad } from '../../lib/utils.js';
 
 const drawElementPosition = (gl, programInfo, buffer, modelMat) => {
@@ -21,22 +21,9 @@ const drwaElementColor = (gl, programInfo, buffer) => {
   gl.enableVertexAttribArray(color);
 }
 
-export const draw = (gl, programInfo, { coneBuffer, cylinderBuffer }, values) => {
-
+export const draw = (gl, programInfo, { coneBuffer, cylinderBuffer }, projectionMat, viewMat) => {
   gl.useProgram(programInfo.program);
   const { uniformLocations } = programInfo;
-
-  const projectionMat = create();
-  const fov = Math.PI / 3;
-  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-  perspective(projectionMat, fov, aspect, 0.1, 100.0);
-
-  let cameraMat = create();
-  cameraMat = m4.yRotate(cameraMat, degToRad(values['cam-rotate-y']));
-  cameraMat = m4.translate(cameraMat, 0, 0, values['cam-trans-z']);
-  const viewMat = create();
-  invert(viewMat, cameraMat);
-
   gl.uniformMatrix4fv(uniformLocations.viewMat, false, viewMat);
   gl.uniformMatrix4fv(uniformLocations.projectionMat, false, projectionMat);
 

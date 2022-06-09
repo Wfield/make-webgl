@@ -1,30 +1,21 @@
-import { create, perspective, rotate, translate, invert } from '../../lib/math.js'
+import { create, perspective, rotate, translate, invert, m4 } from '../../lib/math.js'
 import { clearCanvasToColor } from '../../lib/utils.js';
 import { drawFram as drawCoord } from '../coord/main.js';
+import { degToRad } from '../../lib/utils.js';
 
-const drawDiscoRoom = (gl, programInfo, buffers) => {
+const drawDiscoRoom = (gl, programInfo, buffers, projectionMat, viewMat) => {
   gl.useProgram(programInfo.program);
   const { pos, color } = programInfo.attribLocations;
   const { uniformLocations } = programInfo;
+  gl.uniformMatrix4fv(uniformLocations.viewMat, false, viewMat);
+  gl.uniformMatrix4fv(uniformLocations.projectionMat, false, projectionMat);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, buffers.colorBuffer);
   gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(color);
 
-  const projectionMat = create();
-  const fov = Math.PI / 3;
-  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-  perspective(projectionMat, fov, aspect, 0.1, 100.0);
-  gl.uniformMatrix4fv(uniformLocations.projectionMat, false, projectionMat);
-
-  // 这个矩阵是代表相机在世界坐标中的位置和姿态
-  const caremaMat = create();
-  const viewMat = create();
-  invert(viewMat, caremaMat);
-  gl.uniformMatrix4fv(uniformLocations.viewMat, false, viewMat);
-
-
-  const modelMat = create();
+  let modelMat = create();
+  modelMat = m4.translate(modelMat, -0.5, -0.5, 0.5)
 
   gl.bindBuffer(gl.ARRAY_BUFFER, buffers.positionBuffer);
   gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 0, 0);
@@ -34,10 +25,21 @@ const drawDiscoRoom = (gl, programInfo, buffers) => {
   gl.drawElements(gl.TRIANGLE_STRIP, buffers.elementNum, gl.UNSIGNED_SHORT, 0);
 }
 
-export const draw = (gl, programInfo, buffers) => {
+export const draw = (gl, programInfo, buffers, values) => {
   clearCanvasToColor(gl, [1.0, 1.0, 1.0]);
 
-  drawDiscoRoom(gl, programInfo, buffers)
+  const projectionMat = create();
+  const fov = Math.PI / 3;
+  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+  perspective(projectionMat, fov, aspect, 0.1, 100.0);
 
-  drawCoord(gl);
+  let caremaMat = create();
+  caremaMat = m4.yRotate(caremaMat, degToRad(values['cam-rotate-y']))
+  caremaMat = m4.translate(caremaMat, 0, 0, values['cam-trans-z'])
+  const viewMat = create();
+  invert(viewMat, caremaMat);
+
+  drawDiscoRoom(gl, programInfo, buffers, projectionMat, viewMat)
+
+  drawCoord(gl, projectionMat, viewMat);
 }
