@@ -20,3 +20,4 @@ const drawFram = () => {
 drawFram();
 
 createTool({ type: 'range', name: 'cam-rotate-y', min: 0, max: 360, onChange: drawFram }, values)
+createTool({ type: 'range', name: 'cam-trans-z', min: -2, max: 100, onChange: drawFram }, values)

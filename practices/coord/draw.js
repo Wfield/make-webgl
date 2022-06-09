@@ -1,6 +1,26 @@
 import { create, invert, perspective, m4 } from '../../lib/math.js';
 import { degToRad } from '../../lib/utils.js';
 
+const drawElementPosition = (gl, programInfo, buffer, modelMat) => {
+  const { pos } = programInfo.attribLocations;
+  const { uniformLocations } = programInfo;
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer.position);
+  gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(pos);
+  gl.uniformMatrix4fv(uniformLocations.modelMat, false, modelMat);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer.indices);
+  gl.drawElements(gl.TRIANGLES, buffer.elementNum, gl.UNSIGNED_SHORT, 0);
+}
+
+const drwaElementColor = (gl, programInfo, buffer) => {
+  const { color } = programInfo.attribLocations;
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(color);
+}
+
 export const draw = (gl, programInfo, { coneBuffer, cylinderBuffer }, values) => {
   gl.clearColor(1.0, 1.0, 1.0, 1.0); // 将画布设为白色
   gl.clearDepth(1.0);
@@ -8,7 +28,6 @@ export const draw = (gl, programInfo, { coneBuffer, cylinderBuffer }, values) =>
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   gl.useProgram(programInfo.program);
-  const { pos, color } = programInfo.attribLocations;
   const { uniformLocations } = programInfo;
 
   const projectionMat = create();
@@ -18,49 +37,30 @@ export const draw = (gl, programInfo, { coneBuffer, cylinderBuffer }, values) =>
 
   let cameraMat = create();
   cameraMat = m4.yRotate(cameraMat, degToRad(values['cam-rotate-y']));
-  cameraMat = m4.translate(cameraMat, 0, 0, 2);
+  cameraMat = m4.translate(cameraMat, 0, 0, values['cam-trans-z']);
   const viewMat = create();
   invert(viewMat, cameraMat);
 
   gl.uniformMatrix4fv(uniformLocations.viewMat, false, viewMat);
   gl.uniformMatrix4fv(uniformLocations.projectionMat, false, projectionMat);
 
-  // 渲染圆锥体
-  let coneModelMat = create();
-  coneModelMat = m4.translate(coneModelMat, 0, 0, -1);
-  gl.bindBuffer(gl.ARRAY_BUFFER, coneBuffer.position);
-  gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(pos);
-  gl.uniformMatrix4fv(uniformLocations.modelMat, false, coneModelMat);
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, coneBuffer.indices);
-  gl.drawElements(gl.TRIANGLES, coneBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
-
   // 渲染圆柱体
   let cylinderModelMat = create();
-  gl.bindBuffer(gl.ARRAY_BUFFER, cylinderBuffer.position);
-  gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(pos);
-  gl.bindBuffer(gl.ARRAY_BUFFER, cylinderBuffer.y_color);
-  gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(color);
-  gl.uniformMatrix4fv(uniformLocations.modelMat, false, cylinderModelMat);
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderBuffer.indices);
-  gl.drawElements(gl.TRIANGLES, cylinderBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
+  drwaElementColor(gl, programInfo, cylinderBuffer.y_color);
+  drawElementPosition(gl, programInfo, cylinderBuffer, cylinderModelMat);
+  // 渲染圆锥体(相对于 圆柱体 进行位移)
+  drawElementPosition(gl, programInfo, coneBuffer, m4.translate(cylinderModelMat, 0, 0.9, 0));
 
+  // 绘制 x 轴
+  drwaElementColor(gl, programInfo, cylinderBuffer.x_color);
   cylinderModelMat = m4.zRotate(cylinderModelMat, degToRad(-90));
-  gl.bindBuffer(gl.ARRAY_BUFFER, cylinderBuffer.x_color);
-  gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(color);
-  gl.uniformMatrix4fv(uniformLocations.modelMat, false, cylinderModelMat);
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderBuffer.indices);
-  gl.drawElements(gl.TRIANGLES, cylinderBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
+  drawElementPosition(gl, programInfo, cylinderBuffer, cylinderModelMat);
+  drawElementPosition(gl, programInfo, coneBuffer, m4.translate(cylinderModelMat, 0, 0.9, 0));
 
+  // 绘制 z 轴
+  drwaElementColor(gl, programInfo, cylinderBuffer.z_color);
   cylinderModelMat = m4.xRotate(cylinderModelMat, degToRad(90));
-  gl.bindBuffer(gl.ARRAY_BUFFER, cylinderBuffer.z_color);
-  gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(color);
-  gl.uniformMatrix4fv(uniformLocations.modelMat, false, cylinderModelMat);
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderBuffer.indices);
-  gl.drawElements(gl.TRIANGLES, cylinderBuffer.elementNum, gl.UNSIGNED_SHORT, 0);
-
+  drawElementPosition(gl, programInfo, cylinderBuffer, cylinderModelMat);
+  drawElementPosition(gl, programInfo, coneBuffer, m4.translate(cylinderModelMat, 0, 0.9, 0));
 }
+

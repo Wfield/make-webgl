@@ -19,12 +19,12 @@ export const initBuffer = (gl) => {
 
   // 上方圆采样
   ang = 0;
-  positions.push(0.0, 1.0, 0.0);
+  positions.push(0.0, 0.9, 0.0);
   let cnt2 = cnt;
   while (cnt2) {
     const x = radius * Math.cos(ang);
     const z = radius * Math.sin(ang);
-    positions.push(x, 1.0, z);
+    positions.push(x, 0.9, z);
     ang += per_ang;
     cnt2--;
   }

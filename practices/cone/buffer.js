@@ -1,7 +1,7 @@
 
 // 圆锥
 export const initBuffers = (gl) => {
-  const radius = .1;
+  const radius = .04;
   const cnt = 360 / 10; // 采样次数, 每 10deg 采样一次; 
   const per_ang = 2 * Math.PI / cnt; // 没错采样角度;
   let ang = 0;
@@ -17,7 +17,7 @@ export const initBuffers = (gl) => {
     cnt1--;
   }
 
-  positions.push(0.0, 1.0, 0.0);
+  positions.push(0.0, 0.1, 0.0);
 
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
