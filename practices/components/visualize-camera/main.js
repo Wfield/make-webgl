@@ -1,7 +1,7 @@
-import { createTool } from '../../lib/utils.js';
+import { createTool } from '../../../lib/utils.js';
 import { initProgram } from './program.js';
-import { initBuffers as initCubeBuffer } from '../components/cube/buffer.js';
-import { initBuffers as initPyramidBuffer } from '../components/pyramid/buffer.js';
+import { initBuffers as initCubeBuffer } from '../cube/buffer.js';
+import { initBuffers as initPyramidBuffer } from '../pyramid/buffer.js';
 import { draw } from './draw.js';
 
 const gl = document.querySelector('#gl-canvas').getContext('webgl');

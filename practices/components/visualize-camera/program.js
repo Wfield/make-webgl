@@ -1,4 +1,4 @@
-import { initShader } from '../../lib/shader.js';
+import { initShader } from '../../../lib/shader.js';
 
 const vertexShader = `
 attribute vec4 pos;

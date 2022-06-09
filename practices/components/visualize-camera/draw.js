@@ -1,5 +1,5 @@
-import { create, perspective, invert, m4 } from '../../lib/math.js'
-import { clearCanvasToColor, drawElementPosition, degToRad } from '../../lib/utils.js';
+import { create, perspective, invert, m4 } from '../../../lib/math.js'
+import { clearCanvasToColor, drawElementPosition, degToRad } from '../../../lib/utils.js';
 
 export const draw = (gl, programInfo, { cubeBuffer, pyramidBuffer }, values) => {
   clearCanvasToColor(gl, [1.0, 1.0, 1.0]);
