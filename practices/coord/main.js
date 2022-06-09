@@ -13,11 +13,11 @@ const cylinderBuffer = initCylinderBuffer(gl);
 const values = {};
 
 
-const drawFram = () => {
-  draw(gl, programInfo, { coneBuffer, cylinderBuffer }, values);
+export const drawFram = (_gl) => {
+  draw(_gl, programInfo, { coneBuffer, cylinderBuffer }, values);
 }
 
-drawFram();
+drawFram(gl);
 
 createTool({ type: 'range', name: 'cam-rotate-y', min: 0, max: 360, onChange: drawFram }, values)
 createTool({ type: 'range', name: 'cam-trans-z', min: -2, max: 100, onChange: drawFram }, values)

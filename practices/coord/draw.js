@@ -22,10 +22,6 @@ const drwaElementColor = (gl, programInfo, buffer) => {
 }
 
 export const draw = (gl, programInfo, { coneBuffer, cylinderBuffer }, values) => {
-  gl.clearColor(1.0, 1.0, 1.0, 1.0); // 将画布设为白色
-  gl.clearDepth(1.0);
-  gl.enable(gl.DEPTH_TEST);
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   gl.useProgram(programInfo.program);
   const { uniformLocations } = programInfo;
