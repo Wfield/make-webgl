@@ -1,4 +1,4 @@
-// 正方体
+// 正方体 - 面
 export const initBuffers = (gl) => {
   const cube = [
     0.0, 0.0, 0.0, // front left bottom
@@ -15,20 +15,13 @@ export const initBuffers = (gl) => {
   gl.bindBuffer(gl.ARRAY_BUFFER, cubeBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(cube), gl.STATIC_DRAW);
 
-  // 画 12 条线
   const indices = [
-    0, 1,
-    0, 2,
-    1, 3,
-    2, 3,
-    4, 5,
-    4, 6,
-    5, 7,
-    6, 7,
-    0, 4,
-    1, 5,
-    2, 6,
-    3, 7,
+    0, 1, 3, 0, 2, 3, // front face
+    1, 5, 7, 1, 3, 7, // right face
+    0, 2, 6, 0, 4, 6, // left face
+    2, 3, 7, 2, 6, 7, // top face
+    0, 1, 5, 0, 4, 5, // bottom face
+    4, 5, 7, 4, 6, 7, // back face
   ]
 
   const indexBuffer = gl.createBuffer();
@@ -38,7 +31,7 @@ export const initBuffers = (gl) => {
 
   const colors = [];
   for(let i = 0; i < indices.length; i++) {
-    colors.push(0.0, 0.0, 0.0, 1.0);
+    colors.push(1.0, 1.0, 0.0, 1.0);
   }
   const colorBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);

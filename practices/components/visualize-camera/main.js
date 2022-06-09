@@ -1,6 +1,6 @@
 import { createTool } from '../../../lib/utils.js';
 import { initProgram } from './program.js';
-import { initBuffers as initCubeBuffer } from '../cube/buffer.js';
+import { initBuffers as initCubeBuffer } from '../cube/line-buffer.js';
 import { initBuffers as initPyramidBuffer } from '../pyramid/buffer.js';
 import { draw } from './draw.js';
 

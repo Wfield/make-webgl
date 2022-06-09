@@ -12,7 +12,7 @@ const coneBuffer = initConeBuffer(gl);
 const cylinderBuffer = initCylinderBuffer(gl);
 
 // 可以被组合使用
-export const drawFram = (_gl, projectionMat, viewMat) => {
+export const drawFrame = (_gl, projectionMat, viewMat) => {
   draw(_gl, programInfo, { coneBuffer, cylinderBuffer }, projectionMat, viewMat);
 }
 
@@ -27,4 +27,4 @@ const caremaMat = create();
 const viewMat = create();
 invert(viewMat, caremaMat);
 
-drawFram(gl, projectionMat, viewMat);
+drawFrame(gl, projectionMat, viewMat);
