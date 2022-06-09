@@ -12,7 +12,6 @@ export const initBuffers = (gl) => {
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
-
   const indices = [
     0, 1,
     1, 2,

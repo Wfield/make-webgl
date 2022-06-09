@@ -1,16 +1,17 @@
-import { initShader } from '../../lib/shader.js';
+import { initShader } from '../../../lib/shader.js';
 
 const vertexShader = `
 attribute vec4 pos;
 attribute vec4 color;
 
-uniform mat4 modelViewMat;
+uniform mat4 modelMat;
+uniform mat4 viewMat;
 uniform mat4 projectionMat;
 
 varying highp vec4 vColor;
 
 void main() {
-  gl_Position = projectionMat * modelViewMat * pos;
+  gl_Position = projectionMat * viewMat *  modelMat * pos;
   vColor = color;
 }
 `
@@ -24,9 +25,10 @@ void main() {
 `
 
 
-// 注意是否拿到了属性的 位置
-export const initProgramInfo = gl => {
-  const program = initShader(gl, vertexShader, fragmentShader)
+
+export const initProgram = (gl) => {
+  const program = initShader(gl, vertexShader, fragmentShader);
+
   return {
     program,
     attribLocations: {
@@ -34,8 +36,9 @@ export const initProgramInfo = gl => {
       color: gl.getAttribLocation(program, 'color')
     },
     uniformLocations: {
+      modelMat: gl.getUniformLocation(program, 'modelMat'),
+      viewMat: gl.getUniformLocation(program, 'viewMat'),
       projectionMat: gl.getUniformLocation(program, 'projectionMat'),
-      modelViewMat: gl.getUniformLocation(program, 'modelViewMat')
     }
   }
 }

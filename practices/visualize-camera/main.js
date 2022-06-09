@@ -1,33 +1,22 @@
 import { createTool } from '../../lib/utils.js';
 import { initProgram } from './program.js';
-import { initBuffers as initCameraBuffer } from './buffer.js';
-import { initBuffers as initRoomBuffer } from '../disco-room/buffer.js';
-import { initBuffers as initConeBuffer } from '../pyramid/buffer.js';
-import { initBuffer as initCylinderBuffer } from '../cylinder/buffer.js';
+import { initBuffers as initCubeBuffer } from '../components/cube/buffer.js';
+import { initBuffers as initPyramidBuffer } from '../components/pyramid/buffer.js';
 import { draw } from './draw.js';
 
 const gl = document.querySelector('#gl-canvas').getContext('webgl');
 const programInfo = initProgram(gl);
-const cameraBuffer = initCameraBuffer(gl);
-
-const roomBuffer = initRoomBuffer(gl);
-const coneBuffer = initConeBuffer(gl);
-const cylinderBuffer = initCylinderBuffer(gl);
+const cubeBuffer = initCubeBuffer(gl);
+const pyramidBuffer = initPyramidBuffer(gl);
 
 const values = {}
 
-const drawFram = () => {
-  draw(gl, programInfo, { cameraBuffer, roomBuffer, coneBuffer, cylinderBuffer }, values)
+const drawFrame = () => {
+  draw(gl, programInfo, { cubeBuffer, pyramidBuffer }, values)
 }
 
-drawFram();
+drawFrame();
 
-createTool({ type: 'range', name: 'rotate', min: 0, max: 360, onChange: drawFram }, values)
-createTool({ type: 'range', name: 'cam-trans-x', min: 0, max: 100, step: 0.5, onChange: drawFram }, values)
-createTool({ type: 'range', name: 'cam-trans-y', min: 0, max: 100, step: 0.5, onChange: drawFram }, values)
-createTool({ type: 'range', name: 'cam-trans-z', min: 0, max: 100, onChange: drawFram }, values)
-createTool({ type: 'range', name: 'cam-rotate-y', min: 0, max: 360, onChange: drawFram }, values)
-createTool({ type: 'range', name: 'cam-rotate-x', min: 0, max: 360, onChange: drawFram }, values)
-createTool({ type: 'range', name: 'cam-rotate-z', min: 0, max: 360, onChange: drawFram }, values)
+createTool({ type: 'range', name: 'cam-rotate-y', min: 0, max: 360, onChange: drawFrame }, values)
 
 

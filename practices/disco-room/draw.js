@@ -1,6 +1,6 @@
 import { create, perspective, rotate, translate, invert, m4 } from '../../lib/math.js'
 import { clearCanvasToColor } from '../../lib/utils.js';
-import { drawFram as drawCoord } from '../coord/main.js';
+import { drawFram as drawCoord } from '../components/coord/main.js';
 import { degToRad } from '../../lib/utils.js';
 
 export const draw = (gl, programInfo, buffers, values) => {
@@ -32,6 +32,7 @@ export const draw = (gl, programInfo, buffers, values) => {
   gl.enableVertexAttribArray(color);
 
   let modelMat = create();
+  // modelMat = m4.scale(modelMat, 10, 10, 10);
   modelMat = m4.translate(modelMat, -0.5, -0.5, 0.5)
 
   gl.bindBuffer(gl.ARRAY_BUFFER, buffers.positionBuffer);

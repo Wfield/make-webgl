@@ -1,5 +1,5 @@
-import { create, m4 } from '../../lib/math.js';
-import { degToRad } from '../../lib/utils.js';
+import { create, m4 } from '../../../lib/math.js';
+import { degToRad } from '../../../lib/utils.js';
 
 const drawElementPosition = (gl, programInfo, buffer, modelMat) => {
   const { pos } = programInfo.attribLocations;

@@ -1,8 +1,9 @@
+// 坐标系
 import { initProgram } from "./program.js";
 import { draw } from './draw.js';
 import { initBuffers as initConeBuffer } from '../cone/buffer.js'
 import { initBuffer as initCylinderBuffer } from '../cylinder/buffer.js'
-import { create, perspective, invert } from "../../lib/math.js";
+import { create, perspective, invert } from "../../../lib/math.js";
 
 const gl = document.querySelector('#gl-canvas').getContext('webgl');
 
