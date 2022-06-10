@@ -10,7 +10,7 @@ export const draw = (gl, programInfo, buffers, projectionMat, viewMat) => {
 
   gl.bindBuffer(gl.ARRAY_BUFFER, buffers.color);
   gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(color);
+  gl.enableVertexAttribArray(color); // 颜色的变量不需要 enableVertexAttribArray, 因为这个变量是要传递给 fs 的, 而不是在 vs 中使用
 
   let modelMat = create();
   modelMat = m4.translate(modelMat, 0, 1.0 - 0.2, 0);
