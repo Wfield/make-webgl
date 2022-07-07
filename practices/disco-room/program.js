@@ -10,6 +10,7 @@ uniform mat4 modelMat;
 uniform mat4 viewMat;
 uniform mat4 projectionMat;
 uniform mat4 normalMat;
+uniform vec3 lightColor;
 
 varying vec4 vColor;
 varying vec3 vLighting;
@@ -18,14 +19,13 @@ void main() {
   vec4 transformedNormal = normalMat * vec4(vertexNormal, 1.0);
   vColor = color;
 
-  vec3 lightColor = vec3(1.0, 1.0, 0.0);
-
-  float diffuseStrength = 0.5;
+  vec3 diffuseDir = normalize(vec3(0.0, 0.0, 1.0));
+  float diffuseStrength = 1.0;
   float diffuseFactor = max(dot(transformedNormal.xyz, diffuseDir), 0.0);
   vec3 diffuseColor = lightColor;
   vec3 diffuse = diffuseColor * diffuseFactor * diffuseStrength;
 
-  float ambientStrength = 0.1;
+  float ambientStrength = 0.2;
   vec3 ambientColor = lightColor;
   vec3 ambient = ambientColor * ambientStrength;
   vLighting = ambient + diffuse;
@@ -44,8 +44,6 @@ void main() {
 }
 `
 
-
-
 export const initProgram = (gl) => {
   const program = initShader(gl, vertexShader, fragmentShader);
 
@@ -61,7 +59,7 @@ export const initProgram = (gl) => {
       viewMat: gl.getUniformLocation(program, 'viewMat'),
       projectionMat: gl.getUniformLocation(program, 'projectionMat'),
       normalMat: gl.getUniformLocation(program, 'normalMat'),
-      // lightColor: gl.getUniformLocation(program, 'lightColor'),
+      lightColor: gl.getUniformLocation(program, 'lightColor'),
     }
   }
 }

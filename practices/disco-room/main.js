@@ -11,6 +11,7 @@ const values = {};
 
 const drawFrame = () => {
   draw(gl, programInfo, buffers, values);
+  window.requestAnimationFrame(drawFrame)
 }
 
 drawFrame();

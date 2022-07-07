@@ -1,5 +1,4 @@
 
-
 export const initBuffers = (gl) => {
   const cube = [
     0.0, 0.0, 0.0, // front left bottom
@@ -33,16 +32,59 @@ export const initBuffers = (gl) => {
 
   const materialColors = [];
   for(let i = 0; i < indices.length; i++) {
-    materialColors.push(0.0, 0.0, 0.0, 1.0);
+    materialColors.push(0.5, 0.5, 0.5, 1.0);
   }
   const m_colorBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, m_colorBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(materialColors), gl.STATIC_DRAW);
+
+
+  const cubeNormals = [
+    // Front
+    0.0, 0.0, -1.0,
+    0.0, 0.0, -1.0,
+    0.0, 0.0, -1.0,
+    0.0, 0.0, -1.0,
+
+    // Back
+    0.0, 0.0, 1.0,
+    0.0, 0.0, 1.0,
+    0.0, 0.0, 1.0,
+    0.0, 0.0, 1.0,
+
+    // Top
+    0.0, -1.0, 0.0,
+    0.0, -1.0, 0.0,
+    0.0, -1.0, 0.0,
+    0.0, -1.0, 0.0,
+
+    // Bottom
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+
+    // Right
+    -1.0, 0.0, 0.0,
+    -1.0, 0.0, 0.0,
+    -1.0, 0.0, 0.0,
+    -1.0, 0.0, 0.0,
+
+    // Left
+    1.0, 0.0, 0.0,
+    1.0, 0.0, 0.0,
+    1.0, 0.0, 0.0,
+    1.0, 0.0, 0.0
+  ]
+  const normalBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(cubeNormals), gl.STATIC_DRAW);
 
   return {
     positionBuffer: cubeBuffer,
     indexBuffer: indexBuffer,
     elementNum: indices.length,
     materialColors: m_colorBuffer,
+    normalBuffer,
   }
 }
