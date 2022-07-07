@@ -11,7 +11,7 @@ const drawRoom = (gl, programInfo, buffers, projectionMat, viewMat) => {
   gl.uniformMatrix4fv(uniformLocations.viewMat, false, viewMat);
   gl.uniformMatrix4fv(uniformLocations.projectionMat, false, projectionMat);
 
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.colorBuffer);
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.materialColors);
   gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(color);
 
@@ -23,6 +23,9 @@ const drawRoom = (gl, programInfo, buffers, projectionMat, viewMat) => {
   gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(pos);
   gl.uniformMatrix4fv(uniformLocations.modelMat, false, modelMat);
+
+  // gl.uniformMatrix4fv(uniformLocations.lightColor, false, );
+
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indexBuffer);
   gl.drawElements(gl.TRIANGLE_STRIP, buffers.elementNum, gl.UNSIGNED_SHORT, 0);
 }

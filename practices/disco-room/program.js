@@ -4,35 +4,38 @@ const vertexShader = `
 precision highp float;
 attribute vec4 pos;
 attribute vec4 color;
+attribute vec3 vertexNormal;
 
 uniform mat4 modelMat;
 uniform mat4 viewMat;
 uniform mat4 projectionMat;
-
 uniform mat4 normalMat;
 
 varying vec4 vColor;
 varying vec3 vLighting;
 
 void main() {
-  gl_Position = projectionMat * viewMat *  modelMat * pos;
-
+  vec4 transformedNormal = normalMat * vec4(vertexNormal, 1.0);
   vColor = color;
 
-  float diffuseStrength = ???
+  vec3 lightColor = vec3(1.0, 1.0, 0.0);
+
+  float diffuseStrength = 0.5;
   float diffuseFactor = max(dot(transformedNormal.xyz, diffuseDir), 0.0);
-  vec3 diffuseColor = ???
+  vec3 diffuseColor = lightColor;
   vec3 diffuse = diffuseColor * diffuseFactor * diffuseStrength;
 
-  float ambientStrength = ???
-  vec3 ambientColor = ???
+  float ambientStrength = 0.1;
+  vec3 ambientColor = lightColor;
   vec3 ambient = ambientColor * ambientStrength;
-  vLinghting = ambient + diffuse;
+  vLighting = ambient + diffuse;
+
+  gl_Position = projectionMat * viewMat *  modelMat * pos;
 }
 `
 
 const fragmentShader = `
-varying highp float;
+precision highp float;
 varying vec4 vColor;
 varying vec3 vLighting;
 
@@ -50,12 +53,15 @@ export const initProgram = (gl) => {
     program,
     attribLocations: {
       pos: gl.getAttribLocation(program, 'pos'),
-      color: gl.getAttribLocation(program, 'color')
+      color: gl.getAttribLocation(program, 'color'),
+      vertexNormal: gl.getAttribLocation(program, 'vertexNormal'),
     },
     uniformLocations: {
       modelMat: gl.getUniformLocation(program, 'modelMat'),
       viewMat: gl.getUniformLocation(program, 'viewMat'),
       projectionMat: gl.getUniformLocation(program, 'projectionMat'),
+      normalMat: gl.getUniformLocation(program, 'normalMat'),
+      // lightColor: gl.getUniformLocation(program, 'lightColor'),
     }
   }
 }
